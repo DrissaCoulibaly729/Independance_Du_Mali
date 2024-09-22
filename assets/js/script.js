@@ -13,7 +13,7 @@ window.addEventListener("resize", () => {
 const gravity = 0.05;
 const friction = 0.99;
 let particles = [];
-let particleCount = 100;
+let particleCount = 1000;
 let mouse;
 
 // Classe des particules de feux d'artifice
@@ -63,9 +63,9 @@ function animate() {
   });
 }
 
-// Fonction pour créer une explosion de feux d'artifice
-function explode(x = canvas.width / 2, y = canvas.height / 2) {
-  let speed = 40;
+// Fonction pour la première explosion unique
+function firstExplosion(x = canvas.width / 2, y = canvas.height / 2) {
+  let speed = 50;
   let angleIncrement = (Math.PI * 2) / particleCount;
 
   for (let i = 0; i < particleCount; i++) {
@@ -78,15 +78,34 @@ function explode(x = canvas.width / 2, y = canvas.height / 2) {
   }
 }
 
-// Créer des explosions de feux d'artifice à intervalle régulier
-setInterval(() => {
-  explode(Math.random() * canvas.width, Math.random() * canvas.height);
-}, 2000); // Une explosion toutes les 2 secondes
+// Fonction pour les explosions répétées
+function explode(x = canvas.width / 2, y = canvas.height / 2) {
+  let speed = 40;
+  let angleIncrement = (Math.PI * 2) / 100;
 
-animate();
+  for (let i = 0; i < 100; i++) {
+    particles.push(
+      new Particle(x, y, 2, `hsl(${Math.random() * 360}, 50%, 50%)`, {
+        x: Math.cos(angleIncrement * i) * Math.random() * speed,
+        y: Math.sin(angleIncrement * i) * Math.random() * speed
+      })
+    );
+  }
+}
 
-// Compteur dynamique pour l'indépendance
+// Lancement de la première explosion unique au chargement
 window.addEventListener('load', () => {
+  firstExplosion(); // Explosion initiale
+  animate(); // Commence l'animation continue
+
+  // Commence les explosions répétées après la première
+  setTimeout(() => {
+    setInterval(() => {
+      explode(Math.random() * canvas.width, Math.random() * canvas.height);
+    }, 2000); // Explosion toutes les 2 secondes
+  }, 3000); // Attends 3 secondes avant de commencer les explosions répétées
+
+  // Compteur dynamique pour l'indépendance
   const currentYear = new Date().getFullYear();
   const independenceYear = 1960;
   const yearsOfIndependence = currentYear - independenceYear;
