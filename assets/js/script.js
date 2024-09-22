@@ -13,9 +13,10 @@ window.addEventListener("resize", () => {
 const gravity = 0.05;
 const friction = 0.99;
 let particles = [];
-let particleCount = 1000;
+let particleCount = 100;
 let mouse;
 
+// Classe des particules de feux d'artifice
 class Particle {
   constructor(x, y, r, color, velocity) {
     this.x = x;
@@ -47,6 +48,7 @@ class Particle {
   }
 }
 
+// Animation des particules
 function animate() {
   requestAnimationFrame(animate);
   ctx.fillStyle = "rgba(0, 0, 0, .09)";
@@ -61,17 +63,11 @@ function animate() {
   });
 }
 
-canvas.addEventListener("click", (e) => {
-  mouse = {
-    x: e.clientX,
-    y: e.clientY
-  };
-  explode(mouse.x, mouse.y);
-});
-
+// Fonction pour créer une explosion de feux d'artifice
 function explode(x = canvas.width / 2, y = canvas.height / 2) {
   let speed = 40;
   let angleIncrement = (Math.PI * 2) / particleCount;
+
   for (let i = 0; i < particleCount; i++) {
     particles.push(
       new Particle(x, y, 2, `hsl(${Math.random() * 360}, 50%, 50%)`, {
@@ -82,10 +78,14 @@ function explode(x = canvas.width / 2, y = canvas.height / 2) {
   }
 }
 
-explode();
+// Créer des explosions de feux d'artifice à intervalle régulier
+setInterval(() => {
+  explode(Math.random() * canvas.width, Math.random() * canvas.height);
+}, 2000); // Une explosion toutes les 2 secondes
+
 animate();
 
-// Compteur dynamique
+// Compteur dynamique pour l'indépendance
 window.addEventListener('load', () => {
   const currentYear = new Date().getFullYear();
   const independenceYear = 1960;
