@@ -3,15 +3,571 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>64 ans d'indépendance du Mali</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>65 ans d'indépendance du Mali</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Reset et base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Arrière-plan complexe avec multiple layers */
+        body {
+            background: 
+                radial-gradient(ellipse at top, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(20, 181, 58, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(206, 17, 38, 0.06) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0e13 0%, #1a2332 30%, #2c3e50 70%, #34495e 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Effet de vagues animées en arrière-plan */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.15) 0%, transparent 30%),
+                radial-gradient(circle at 80% 20%, rgba(20, 181, 58, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 40% 40%, rgba(206, 17, 38, 0.1) 0%, transparent 30%);
+            animation: morphing 20s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes morphing {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            33% { 
+                transform: scale(1.1) rotate(120deg);
+                opacity: 0.8;
+            }
+            66% { 
+                transform: scale(0.9) rotate(240deg);
+                opacity: 0.9;
+            }
+        }
+
+        /* Particules géométriques flottantes */
+        .geometric-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .geo-shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .geo-shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #FFD700, transparent);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .geo-shape:nth-child(2) {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #14B53A, transparent);
+            border-radius: 50%;
+            top: 60%;
+            right: 15%;
+            animation-delay: -5s;
+        }
+
+        .geo-shape:nth-child(3) {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #CE1126, transparent);
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+            top: 70%;
+            left: 20%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-30px) rotate(120deg);
+            }
+            66% {
+                transform: translateY(-15px) rotate(240deg);
+            }
+        }
+
+        /* Canvas pour feux d'artifice */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2;
+        }
+
+        /* Container principal */
+        .main-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            z-index: 3;
+            width: 100%;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        /* Hero section avec effet glassmorphism */
+        .hero-content {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 60px 40px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: heroEntrance 2s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes heroEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Drapeau avec effet 3D réaliste */
+        .flag-container {
+            position: absolute;
+            top: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+            perspective: 1000px;
+        }
+
+        .flag {
+            display: flex;
+            width: 280px;
+            height: 180px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 10px 20px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            animation: flagWave 6s infinite ease-in-out;
+            position: relative;
+        }
+
+        .flag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shine 4s infinite;
+            z-index: 10;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes flagWave {
+            0%, 100% {
+                transform: perspective(1000px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            }
+            25% {
+                transform: perspective(1000px) rotateX(5deg) rotateY(-10deg) rotateZ(2deg);
+            }
+            50% {
+                transform: perspective(1000px) rotateX(-3deg) rotateY(5deg) rotateZ(-1deg);
+            }
+            75% {
+                transform: perspective(1000px) rotateX(2deg) rotateY(-5deg) rotateZ(1deg);
+            }
+        }
+
+        .stripe {
+            width: 33.33%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stripe::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: ripple 3s infinite ease-in-out;
+        }
+
+        @keyframes ripple {
+            0%, 100% { transform: translateX(-100%) skewX(-20deg); }
+            50% { transform: translateX(100%) skewX(-20deg); }
+        }
+
+        .green {
+            background: linear-gradient(180deg, #14B53A 0%, #0F8A2A 100%);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .yellow {
+            background: linear-gradient(180deg, #FFD700 0%, #DAA520 100%);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .red {
+            background: linear-gradient(180deg, #CE1126 0%, #A60E1F 100%);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Chiffres avec effet néon spectaculaire */
+        .numbers {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+            perspective: 1000px;
+        }
+
+        .number {
+            font-family: 'Playfair Display', serif;
+            font-size: 12vw;
+            font-weight: 900;
+            margin: 0 20px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: numberFloat 4s infinite ease-in-out;
+        }
+
+        @keyframes numberFloat {
+            0%, 100% {
+                transform: translateY(0) rotateX(0deg);
+            }
+            25% {
+                transform: translateY(-20px) rotateX(10deg);
+            }
+            75% {
+                transform: translateY(-10px) rotateX(-5deg);
+            }
+        }
+
+        #six {
+            background: linear-gradient(135deg, #FFD700 0%, #FF8C00 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
+            animation-delay: 0.2s;
+        }
+
+        #five {
+            background: linear-gradient(135deg, #FF4500 0%, #DC143C 50%, #FF4500 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(255, 69, 0, 0.8));
+            animation-delay: 0.4s;
+        }
+
+        /* Titre avec animation sophistiquée */
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4vw;
+            font-weight: 700;
+            margin: 30px 0;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+            position: relative;
+            line-height: 1.2;
+        }
+
+        @keyframes titleGlow {
+            0% {
+                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+                transform: scale(1);
+            }
+            100% {
+                filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+                transform: scale(1.02);
+            }
+        }
+
+        /* Sous-titre élégant */
+        .subtitle {
+            font-size: 2vw;
+            font-weight: 300;
+            color: #FFD700;
+            font-style: italic;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out 1s forwards;
+            margin-bottom: 30px;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Badge anniversaire premium */
+        .anniversary-badge {
+            position: absolute;
+            bottom: 8%;
+            right: 5%;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.95) 0%, rgba(218, 165, 32, 0.95) 100%);
+            color: #1a1a1a;
+            padding: 20px 30px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1em;
+            box-shadow: 
+                0 10px 30px rgba(255, 215, 0, 0.4),
+                0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: badgeEntrance 2s ease-out 2s forwards;
+            transform: translateX(100px);
+            opacity: 0;
+            z-index: 5;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes badgeEntrance {
+            0% {
+                opacity: 0;
+                transform: translateX(100px) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        /* Particules d'étoiles animées */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #FFD700 0%, transparent 70%);
+            border-radius: 50%;
+            animation: starTwinkle 4s infinite ease-in-out;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.8);
+            }
+        }
+
+        /* Citation inspirante */
+        .inspirational-quote {
+            position: absolute;
+            bottom: 15%;
+            left: 5%;
+            max-width: 300px;
+            font-size: 0.9em;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+            opacity: 0;
+            animation: quoteAppear 2s ease-out 3s forwards;
+            line-height: 1.6;
+        }
+
+        @keyframes quoteAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsivité premium */
+        @media (max-width: 1024px) {
+            .number {
+                font-size: 14vw;
+                margin: 0 15px;
+            }
+
+            .main-title {
+                font-size: 5vw;
+            }
+
+            .subtitle {
+                font-size: 2.5vw;
+            }
+
+            .flag {
+                width: 220px;
+                height: 140px;
+            }
+
+            .hero-content {
+                padding: 40px 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .number {
+                font-size: 18vw;
+                margin: 0 10px;
+            }
+
+            .main-title {
+                font-size: 6vw;
+                letter-spacing: 2px;
+            }
+
+            .subtitle {
+                font-size: 3.5vw;
+            }
+
+            .flag {
+                width: 180px;
+                height: 110px;
+            }
+
+            .hero-content {
+                padding: 30px 20px;
+            }
+
+            .anniversary-badge {
+                bottom: 12%;
+                right: 50%;
+                transform: translateX(50%);
+                font-size: 0.9em;
+                padding: 15px 25px;
+            }
+
+            .inspirational-quote {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .number {
+                font-size: 20vw;
+            }
+
+            .main-title {
+                font-size: 7vw;
+            }
+
+            .subtitle {
+                font-size: 4vw;
+            }
+
+            .flag {
+                width: 150px;
+                height: 95px;
+            }
+        }
+
+        /* Animations d'interaction */
+        .hero-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 35px 70px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .anniversary-badge:hover {
+            transform: translateX(0) scale(1.05);
+            box-shadow: 
+                0 15px 40px rgba(255, 215, 0, 0.6),
+                0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+    </style>
 </head>
 <body>
+    <!-- Formes géométriques flottantes -->
+    <div class="geometric-bg">
+        <div class="geo-shape"></div>
+        <div class="geo-shape"></div>
+        <div class="geo-shape"></div>
+    </div>
 
-    <!-- Canvas pour le feu d'artifice -->
+    <!-- Étoiles scintillantes -->
+    <div class="stars-container" id="stars"></div>
+
+    <!-- Canvas pour feux d'artifice -->
     <canvas id="canvas"></canvas>
 
-    <!-- Section principale avec le drapeau malien -->
+    <!-- Drapeau malien -->
     <div class="flag-container">
         <div class="flag">
             <div class="stripe green"></div>
@@ -20,21 +576,261 @@
         </div>
     </div>
 
+    <!-- Contenu principal -->
     <div class="main-container">
-        <img class="background-image" src="assets/img/Mosqueetombou.jpg" alt="Mosquée de Tombouctou">
-
-        <div class="content">
+        <div class="hero-content">
             <div class="numbers">
                 <span class="number" id="six">6</span>
-                <span class="number" id="four">4</span>
+                <span class="number" id="five">5</span>
             </div>
-            <h1>Anniversaire d'indépendance du Mali</h1>
-            <p id="counter">64 ans de fierté et de liberté</p>
+            <h1 class="main-title">Indépendance du Mali</h1>
+            <p class="subtitle" id="counter">65 ans de fierté et de liberté</p>
         </div>
-
-        <!-- <img class="foreground-image" src="assets/img/Malian_soldiers_in_Bamako_during_2012_coup.jpg" alt="Soldats Maliens"> -->
     </div>
 
-    <script src="assets/js/script.js"></script>
+    <!-- Badge anniversaire -->
+    <div class="anniversary-badge">
+        🇲🇱 1960 - 2025
+    </div>
+
+    <!-- Citation inspirante -->
+    <div class="inspirational-quote">
+        "Un peuple sans mémoire est un peuple sans avenir"
+        <br><em>- Proverbe africain</em>
+    </div>
+
+    <script>
+        // Configuration canvas
+        const canvas = document.getElementById("canvas");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let ctx = canvas.getContext("2d");
+
+        // Gestion redimensionnement
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Paramètres physiques améliorés
+        const gravity = 0.06;
+        const friction = 0.97;
+        let particles = [];
+        const malianColors = [
+            '#14B53A', '#FFD700', '#CE1126', '#FFFFFF',
+            '#32CD32', '#FFA500', '#FF6347', '#87CEEB'
+        ];
+
+        // Classe particule premium avec traînée
+        class Particle {
+            constructor(x, y, r, color, velocity) {
+                this.x = x;
+                this.y = y;
+                this.r = r;
+                this.color = color;
+                this.dx = velocity.x;
+                this.dy = velocity.y;
+                this.opacity = 1;
+                this.trail = [];
+                this.maxTrail = 12;
+                this.life = 1;
+                this.decay = Math.random() * 0.015 + 0.005;
+            }
+
+            draw() {
+                // Dessiner traînée
+                for (let i = 0; i < this.trail.length; i++) {
+                    const alpha = (this.opacity * (i + 1)) / this.trail.length * 0.4;
+                    const size = this.r * ((i + 1) / this.trail.length) * 0.8;
+                    
+                    ctx.save();
+                    ctx.globalAlpha = alpha;
+                    ctx.beginPath();
+                    ctx.arc(this.trail[i].x, this.trail[i].y, size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                // Particule principale avec halo
+                ctx.save();
+                ctx.globalAlpha = this.opacity * 0.3;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r * 3, 0, Math.PI * 2);
+                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 3);
+                gradient.addColorStop(0, this.color);
+                gradient.addColorStop(1, 'transparent');
+                ctx.fillStyle = gradient;
+                ctx.fill();
+                ctx.restore();
+
+                // Particule core
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                
+                // Éclat central
+                ctx.globalAlpha = this.opacity * 0.8;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r * 0.3, 0, Math.PI * 2);
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fill();
+                ctx.restore();
+            }
+
+            update() {
+                // Mise à jour traînée
+                this.trail.push({ x: this.x, y: this.y });
+                if (this.trail.length > this.maxTrail) {
+                    this.trail.shift();
+                }
+
+                this.draw();
+                
+                // Physique
+                this.dy += gravity;
+                this.dx *= friction;
+                this.dy *= friction;
+                this.x += this.dx;
+                this.y += this.dy;
+                this.opacity -= this.decay;
+                this.life -= this.decay;
+            }
+        }
+
+        // Animation principale
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Fond avec fade subtil
+            ctx.fillStyle = "rgba(10, 14, 19, 0.08)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Mise à jour particules
+            for (let i = particles.length - 1; i >= 0; i--) {
+                if (particles[i].life > 0) {
+                    particles[i].update();
+                } else {
+                    particles.splice(i, 1);
+                }
+            }
+        }
+
+        // Explosion premium avec patterns
+        function createExplosion(x, y, intensity = 1) {
+            const particleCount = Math.floor(120 * intensity);
+            const speed = 55 * intensity;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const angle = (Math.PI * 2 * i) / particleCount;
+                const velocity = Math.random() * speed + 20;
+                const color = malianColors[Math.floor(Math.random() * malianColors.length)];
+                const size = Math.random() * 3 + 1;
+                
+                particles.push(new Particle(
+                    x, y, size, color,
+                    {
+                        x: Math.cos(angle) * velocity * (0.8 + Math.random() * 0.4),
+                        y: Math.sin(angle) * velocity * (0.8 + Math.random() * 0.4)
+                    }
+                ));
+            }
+        }
+
+        // Génération d'étoiles
+        function generateStars() {
+            const container = document.getElementById('stars');
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 4 + 's';
+                star.style.animationDuration = (3 + Math.random() * 3) + 's';
+                container.appendChild(star);
+            }
+        }
+
+        // Séquence d'ouverture
+        function openingSequence() {
+            // Explosion centrale majeure
+            setTimeout(() => {
+                createExplosion(canvas.width / 2, canvas.height / 2, 1.5);
+            }, 1000);
+
+            // Explosions secondaires
+            setTimeout(() => {
+                createExplosion(canvas.width * 0.3, canvas.height * 0.4, 1);
+                createExplosion(canvas.width * 0.7, canvas.height * 0.4, 1);
+            }, 2500);
+
+            // Finale spectaculaire
+            setTimeout(() => {
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        createExplosion(
+                            Math.random() * canvas.width,
+                            Math.random() * canvas.height * 0.6 + canvas.height * 0.2,
+                            0.8
+                        );
+                    }, i * 300);
+                }
+            }, 4000);
+        }
+
+        // Pattern de feux d'artifice continus
+        function continuousFireworks() {
+            setInterval(() => {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * (canvas.height * 0.5) + canvas.height * 0.1;
+                createExplosion(x, y, 0.7 + Math.random() * 0.6);
+            }, 2500);
+        }
+
+        // Interaction tactile/clic
+        function setupInteractions() {
+            canvas.addEventListener('click', (e) => {
+                createExplosion(e.clientX, e.clientY, 1.2);
+            });
+
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                createExplosion(
+                    touch.clientX - rect.left,
+                    touch.clientY - rect.top,
+                    1.2
+                );
+            });
+        }
+
+        // Initialisation au chargement
+        window.addEventListener('load', () => {
+            generateStars();
+            animate();
+            openingSequence();
+            setupInteractions();
+            
+            setTimeout(() => {
+                continuousFireworks();
+            }, 6000);
+
+            // Mise à jour dynamique du compteur
+            const currentYear = new Date().getFullYear();
+            const yearsOfIndependence = currentYear - 1960;
+            document.getElementById('counter').textContent = 
+                `${yearsOfIndependence} ans de fierté et de liberté`;
+        });
+
+        // Gestion responsive
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 </body>
 </html>
